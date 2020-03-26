@@ -1,16 +1,11 @@
-{%- if theme.footer.beian.enable %}
-  <div class="beian">
-    {{- next_url('http://www.beian.miit.gov.cn', theme.footer.beian.icp + ' ') }}
-    {%- if theme.footer.beian.gongan_icon_url %}
-      <img src="{{ theme.footer.beian.gongan_icon_url }}" style="display: inline-block;">
-    {%- endif %}
-    {%- if theme.footer.beian.gongan_id and theme.footer.beian.gongan_num %}
-      {{- next_url('http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=' + theme.footer.beian.gongan_id, theme.footer.beian.gongan_num + ' ') }}
-    {%- endif %}
-  </div>
-{%- endif %}
+
 
 <div class="copyright">
+  <div id="days"></div>
+
+
+<span class="post-meta-divider">|</span>
+
   {% set copyright_year = date(null, 'YYYY') %}
   &copy; {% if theme.footer.since and theme.footer.since != copyright_year %}{{ theme.footer.since }} – {% endif %}
   <span itemprop="copyrightYear">{{ copyright_year }}</span>
@@ -52,6 +47,20 @@
   </div>
 {%- endif %}
 
+ <span class="post-meta-divider">|</span>
+
+{%- if theme.footer.beian.enable %}
+  <div class="beian">
+    {{- next_url('http://www.beian.miit.gov.cn', theme.footer.beian.icp + ' ') }}
+    {%- if theme.footer.beian.gongan_icon_url %}
+      <img src="{{ theme.footer.beian.gongan_icon_url }}" style="display: inline-block;">
+    {%- endif %}
+    {%- if theme.footer.beian.gongan_id and theme.footer.beian.gongan_num %}
+      {{- next_url('http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=' + theme.footer.beian.gongan_id, theme.footer.beian.gongan_num + ' ') }}
+    {%- endif %}
+  </div>
+{%- endif %}
+
 {%- if theme.add_this_id %}
   <div class="addthis_inline_share_toolbox">
     <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid={{ theme.add_this_id }}" async="async"></script>
@@ -59,3 +68,31 @@
 {%- endif %}
 
 {{- next_inject('footer') }}
+
+
+<script>
+function show_date_time(){
+    window.setTimeout("show_date_time()", 1000);
+    BirthDay=new Date("09/15/2016 02:02:02");
+    today=new Date();
+    timeold=(today.getTime()-BirthDay.getTime());
+    sectimeold=timeold/1000
+    secondsold=Math.floor(sectimeold);
+    msPerDay=24*60*60*1000
+    e_daysold=timeold/msPerDay
+    daysold=Math.floor(e_daysold);
+    e_hrsold=(e_daysold-daysold)*24;
+    hrsold=setzero(Math.floor(e_hrsold));
+    e_minsold=(e_hrsold-hrsold)*60;
+    minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+    seconds=setzero(Math.floor((e_minsold-minsold)*60));
+    document.getElementById('days').innerHTML="小站已运行 "+daysold+" 天 "+hrsold+" 小时 "+minsold+" 分 "+seconds+" 秒";
+}
+function setzero(i) {
+    if (i<10) {
+        i="0" + i
+    };
+    return i;
+}
+show_date_time();
+</script>
